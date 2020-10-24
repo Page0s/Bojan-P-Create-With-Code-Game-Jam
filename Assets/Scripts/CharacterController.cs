@@ -11,11 +11,13 @@ public class CharacterController : MonoBehaviour
     float horizontal;
     float vertical;
     Vector3 movement;
+    Animator animator;
 
     // Awake is called when the script instance is being loaded
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 
     // Start is called before the first frame update
@@ -43,12 +45,25 @@ public class CharacterController : MonoBehaviour
         movement = movement.normalized * movementSpeed * Time.deltaTime;
 
         // Move the player to it's current position plus the movement.
-        rigidbody.MovePosition(transform.position + movement);
+        if (IsWalking())
+        {
+            rigidbody.MovePosition(transform.position + movement);
+            animator.SetFloat("IsWalking", 2f);
+        }
+        else
+        {
+            animator.SetFloat("IsWalking", 1f); ; 
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private bool IsWalking()
+    {
+        return horizontal != 0f || vertical != 0f;
     }
 }
