@@ -44,6 +44,12 @@ public class CharacterController : MonoBehaviour
         // Normalise the movement vector and make it proportional to the speed per second.
         movement = movement.normalized * movementSpeed * Time.deltaTime;
 
+        // Use player attack key
+        if (Input.GetMouseButtonDown(0))
+        {
+            animator.SetTrigger("Kick");
+        }
+
         // Move the player to it's current position plus the movement.
         if (IsWalking())
         {
