@@ -22,40 +22,48 @@ public class CharacterController : MonoBehaviour
     Animator animator;
     bool isKicking;
     bool canAttack;
+    GameManager gameManager;
 
     // Awake is called when the script instance is being loaded
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // This function is called every fixed framerate frame, if the MonoBehaviour is enabled
     private void FixedUpdate()
     {
-        if (!isKicking)
+        if (gameManager.IsGameActive)
         {
-            // Move the player around the scene.
-            Move();
+            if (!isKicking)
+            {
+                // Move the player around the scene.
+                Move();
 
-            // Turn the player to face the mouse cursor.
-            Turning();
+                // Turn the player to face the mouse cursor.
+                Turning();
+            }
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        // pickup player input movement controles
-        horizontal = Input.GetAxisRaw("Horizontal");
-        vertical = Input.GetAxisRaw("Vertical");
-
-        // Add attack rate
-        if (Time.time >= nextAttackTime && Input.GetKeyDown(KeyCode.Space))
+        if (gameManager.IsGameActive)
         {
-            //canAttack = true;
-            Attack();
-            nextAttackTime = Time.time + 1f / attackRate;
+            // pickup player input movement controles
+            horizontal = Input.GetAxisRaw("Horizontal");
+            vertical = Input.GetAxisRaw("Vertical");
+
+            // Add attack rate
+            if (Time.time >= nextAttackTime && Input.GetKeyDown(KeyCode.Space))
+            {
+                //canAttack = true;
+                Attack();
+                nextAttackTime = Time.time + 1f / attackRate;
+            }
         }
     }
 
