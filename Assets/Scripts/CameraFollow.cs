@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform targetTransform;   // The position that that camera will be following.
-    public float smoothingSpeed = 5f;   // The speed with which the camera will be following.
+    [SerializeField] Transform targetTransform;   // The position that that camera will be following.
+    [SerializeField] float smoothingSpeed = 5f;   // The speed with which the camera will be following.
 
     private Vector3 offset;             // The initial offset from the target.
 
