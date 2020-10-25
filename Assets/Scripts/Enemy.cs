@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int DeathCount { get; private set; }
+    public static int deathCount = 0;
 
     [SerializeField] int maxHealth = 100;
     [SerializeField] float waitKickTime = 1.3f;
@@ -27,12 +27,6 @@ public class Enemy : MonoBehaviour
         animator.SetBool("IsWalking", true);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
@@ -47,7 +41,6 @@ public class Enemy : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
-            ++DeathCount;
         }
 }
 
@@ -82,5 +75,6 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(waitKickTime - 0.3f);
         this.gameObject.SetActive(false);
+        ++deathCount;
     }
 }
