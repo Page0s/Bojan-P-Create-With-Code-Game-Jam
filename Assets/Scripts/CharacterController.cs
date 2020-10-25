@@ -6,12 +6,15 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
     [SerializeField] float movementSpeed;
+    [SerializeField] float rotationSpeed;
+    [SerializeField] float waitKickTime = 1.12f;
 
     Rigidbody rigidbody;
     float horizontal;
     float vertical;
     Vector3 movement;
     Animator animator;
+    bool isKicking;
 
     // Awake is called when the script instance is being loaded
     private void Awake()
@@ -20,20 +23,27 @@ public class CharacterController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // This function is called every fixed framerate frame, if the MonoBehaviour is enabled
     private void FixedUpdate()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
-        vertical = Input.GetAxisRaw("Vertical");
+        if (!isKicking)
+        {
+            // Move the player around the scene.
+            Move();
 
-        // Move the player around the scene.
-        Move();
+            // Turn the player to face the mouse cursor.
+            Turning();
+        }
+    }
+
+    private void Turning()
+    {
+        if (IsWalking())
+        {
+            Vector3 lookVector = new Vector3(horizontal, 0f, vertical).normalized;
+            lookVector.y = 0f;
+            rigidbody.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookVector), rotationSpeed * Time.deltaTime);
+        }
     }
 
     private void Move()
@@ -43,12 +53,6 @@ public class CharacterController : MonoBehaviour
 
         // Normalise the movement vector and make it proportional to the speed per second.
         movement = movement.normalized * movementSpeed * Time.deltaTime;
-
-        // Use player attack key
-        if (Input.GetMouseButtonDown(0))
-        {
-            animator.SetTrigger("Kick");
-        }
 
         // Move the player to it's current position plus the movement.
         if (IsWalking())
@@ -62,10 +66,36 @@ public class CharacterController : MonoBehaviour
         }
     }
 
+    private void WaitForAnimationEnd(float waitTime)
+    {
+        Coroutine timeWaiter = StartCoroutine(WaitForTime(waitTime));
+        if (!isKicking)
+        {
+            StopCoroutine(timeWaiter);
+        }
+    }
+
+    private IEnumerator WaitForTime(float waitTime)
+    {
+        yield return new WaitForSecondsRealtime(waitTime);
+        isKicking = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+        // pickup player input movement controles
+        horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
+
+        // Use player attack key
+        if (Input.GetMouseButtonDown(0))
+        {
+            isKicking = true;
+            animator.SetTrigger("Kick");
+            // Wait kick animation to end
+            WaitForAnimationEnd(waitKickTime);
+        }
     }
 
     private bool IsWalking()
