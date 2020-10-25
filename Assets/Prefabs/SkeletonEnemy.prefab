@@ -602,7 +602,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  waitKickTime: 5.5
+  waitKickTime: 4
 --- !u!1 &7769930219836930624
 GameObject:
   m_ObjectHideFlags: 0
