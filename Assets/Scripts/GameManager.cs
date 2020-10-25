@@ -1,18 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public bool IsGameActive { get; set; }
+
+    CharacterController characterController;
+
+    // Awake is called when the script instance is being loaded
+    private void Awake()
     {
-        
+        characterController = GameObject.Find("Player").GetComponent<CharacterController>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StartGame()
     {
-        
+        IsGameActive = true;
     }
 }
