@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public int DeathCount { get; private set; }
+
     [SerializeField] int maxHealth = 100;
     [SerializeField] float waitKickTime = 1.3f;
 
@@ -45,6 +47,7 @@ public class Enemy : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
+            ++DeathCount;
         }
 }
 
