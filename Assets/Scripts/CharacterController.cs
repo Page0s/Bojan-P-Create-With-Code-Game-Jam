@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
+    public bool CanAttack { get; set; }
+
     [SerializeField] float movementSpeed;
     [SerializeField] float rotationSpeed;
     [SerializeField] float waitKickTime = 1.12f;
@@ -21,8 +23,10 @@ public class CharacterController : MonoBehaviour
     Vector3 movement;
     Animator animator;
     bool isKicking;
-    bool canAttack;
     GameManager gameManager;
+    SoundManager soundManager;
+    ParticleSystem abuilityUnlockEffect;
+    ParticleSystem starEffect;
 
     // Awake is called when the script instance is being loaded
     private void Awake()
@@ -30,6 +34,15 @@ public class CharacterController : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+        abuilityUnlockEffect = GameObject.Find("PowerUp").GetComponent<ParticleSystem>();
+        starEffect = GameObject.Find("StarEffect").GetComponent<ParticleSystem>();
+    }
+
+    // Start is called just before any of the Update methods is called the first time
+    private void Start()
+    {
+        CanAttack = true;
     }
 
     // This function is called every fixed framerate frame, if the MonoBehaviour is enabled
@@ -58,7 +71,7 @@ public class CharacterController : MonoBehaviour
             vertical = Input.GetAxisRaw("Vertical");
 
             // Add attack rate
-            if (Time.time >= nextAttackTime && Input.GetKeyDown(KeyCode.Space))
+            if (Time.time >= nextAttackTime && Input.GetKeyDown(KeyCode.Space) && CanAttack)
             {
                 //canAttack = true;
                 Attack();
@@ -70,7 +83,6 @@ public class CharacterController : MonoBehaviour
     private void Attack()
     {
         isKicking = true;
-        canAttack = false;
         animator.SetTrigger("Kick");
 
         // Detect all kicked enemys
@@ -79,6 +91,7 @@ public class CharacterController : MonoBehaviour
         // Damage enemys
         foreach (Collider enemyCollider in hitEnemies)
         {
+            soundManager.PlayKickSound();
             enemyCollider.GetComponentInParent<Enemy>().TakeDamage(attackDamage);
         }
 
@@ -159,5 +172,20 @@ public class CharacterController : MonoBehaviour
     private bool IsWalking()
     {
         return horizontal != 0f || vertical != 0f;
+    }
+
+    public void PlayAbuilityEffect()
+    {
+        abuilityUnlockEffect.Play();
+    }
+
+    public void PlayStartEffect()
+    {
+        starEffect.Play();
+    }
+
+    public void PlayDanceAnimation()
+    {
+        animator.SetTrigger("Dance");
     }
 }
