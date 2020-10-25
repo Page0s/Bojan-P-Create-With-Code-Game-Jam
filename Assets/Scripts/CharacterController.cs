@@ -10,7 +10,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] float waitKickTime = 1.12f;
     [SerializeField] float attackRange = 0.5f;
     [SerializeField] float attackRate = 2f;
-    [SerializeField] int attackDamage = 40;
+    [SerializeField] int attackDamage = 100;
     [SerializeField] LayerMask enemyLayers;
     [SerializeField] Transform attackPoint;
 
