@@ -299,7 +299,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1218842977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,7 +307,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1218842976}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 663e8c4312b61e742819453622fd7ff2, type: 3}
   m_Name: 
@@ -323,8 +323,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 59.834827, y: 67.8047, z: 90.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1687258585}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -546,12 +545,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_LocalRotation: {x: 0.26692262, y: -0.027140718, z: 0.00766923, w: 0.9633052}
-  m_LocalPosition: {x: 3.5009575, y: 0.72229767, z: -18.102005}
+  m_LocalRotation: {x: 0.20582746, y: -0.005557468, z: 0.0012778415, w: 0.9785717}
+  m_LocalPosition: {x: 62.097134, y: 71.1275, z: 66.226105}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1218842978}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 20.146, y: 195.09, z: 0.001}
 --- !u!114 &1687258586
 MonoBehaviour:
@@ -591,13 +590,32 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9034fc382610a044bba79e55955fed42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 1975277327}
   smoothingSpeed: 5
+--- !u!1 &1947392658 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1299634772446850, guid: 5bec618253d9544c19db1fcf97aaf695,
+    type: 3}
+  m_PrefabInstance: {fileID: 874293255}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1947392664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947392658}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8880be9f4394e41b536d8540a307d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateSpeed: 2
 --- !u!1 &1975277325 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 76379732349447983, guid: fe2d5dfc233c02d4a9725802eab9d894,
@@ -625,7 +643,7 @@ MonoBehaviour:
   movementSpeed: 2
   rotationSpeed: 15
   waitKickTime: 1.3
-  attackRange: 0.7
+  attackRange: 0.9
   attackRate: 0.7
   attackDamage: 40
   enemyLayers:
