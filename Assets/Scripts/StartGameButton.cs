@@ -18,7 +18,6 @@ public class StartGameButton : MonoBehaviour
 
     private void StartGame()
     {
-        Debug.Log("Game Strted!");
         gameManager.StartGame();
 
         Button[] buttons = FindObjectsOfType<Button>();

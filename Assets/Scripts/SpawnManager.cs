@@ -32,7 +32,6 @@ public class SpawnManager : MonoBehaviour
     {
         if (gameManager.IsGameActive && isSpawningEnemys)
         {
-            Debug.Log("Spawning Enemys!");
             isSpawningEnemys = false;
             StartCoroutine(SpawnEnemys());
         }
