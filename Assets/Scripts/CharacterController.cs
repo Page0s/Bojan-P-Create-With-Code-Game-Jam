@@ -8,13 +8,20 @@ public class CharacterController : MonoBehaviour
     [SerializeField] float movementSpeed;
     [SerializeField] float rotationSpeed;
     [SerializeField] float waitKickTime = 1.12f;
+    [SerializeField] float attackRange = 0.5f;
+    [SerializeField] float attackRate = 2f;
+    [SerializeField] int attackDamage = 40;
+    [SerializeField] LayerMask enemyLayers;
+    [SerializeField] Transform attackPoint;
 
     Rigidbody rigidbody;
     float horizontal;
     float vertical;
+    float nextAttackTime = 0f;
     Vector3 movement;
     Animator animator;
     bool isKicking;
+    bool canAttack;
 
     // Awake is called when the script instance is being loaded
     private void Awake()
@@ -34,6 +41,54 @@ public class CharacterController : MonoBehaviour
             // Turn the player to face the mouse cursor.
             Turning();
         }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // pickup player input movement controles
+        horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
+
+        // Add attack rate
+        if (Time.time >= nextAttackTime && Input.GetKeyDown(KeyCode.Space))
+        {
+            //canAttack = true;
+            Attack();
+            nextAttackTime = Time.time + 1f / attackRate;
+        }
+    }
+
+    private void Attack()
+    {
+        isKicking = true;
+        canAttack = false;
+        animator.SetTrigger("Kick");
+
+        // Detect all kicked enemys
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
+
+        // Damage enemys
+        foreach (Collider enemyCollider in hitEnemies)
+        {
+            enemyCollider.GetComponentInParent<Enemy>().TakeDamage(attackDamage);
+        }
+
+        // Wait kick animation to end
+        WaitForAnimationEnd(waitKickTime);
+
+        // Use player attack key
+        if (Input.GetMouseButtonDown(0))
+        {
+            //
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+            return;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 
     private void Turning()
@@ -91,23 +146,6 @@ public class CharacterController : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(waitTime);
         isKicking = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // pickup player input movement controles
-        horizontal = Input.GetAxisRaw("Horizontal");
-        vertical = Input.GetAxisRaw("Vertical");
-
-        // Use player attack key
-        if (Input.GetMouseButtonDown(0))
-        {
-            isKicking = true;
-            animator.SetTrigger("Kick");
-            // Wait kick animation to end
-            WaitForAnimationEnd(waitKickTime);
-        }
     }
 
     private bool IsWalking()
