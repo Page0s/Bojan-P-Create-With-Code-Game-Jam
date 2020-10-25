@@ -51,19 +51,31 @@ public class CharacterController : MonoBehaviour
         // Set the movement vector based on the axis input.
         movement.Set(horizontal, 0f, vertical);
 
-        // Normalise the movement vector and make it proportional to the speed per second.
-        movement = movement.normalized * movementSpeed * Time.deltaTime;
-
         // Move the player to it's current position plus the movement.
-        if (IsWalking())
+        if (IsWalking() && !IsRunning())
         {
+            // Normalise the movement vector and make it proportional to the speed per second.
+            movement = movement.normalized * movementSpeed * Time.deltaTime;
+
             rigidbody.MovePosition(transform.position + movement);
-            animator.SetFloat("IsWalking", 2f);
+            animator.SetFloat("IsWalking", 3f);
+        }
+        else if (IsWalking() && IsRunning())
+        {
+            // Normalise the movement vector and make it proportional to the speed per second.
+            movement = movement.normalized * (movementSpeed * 2) * Time.deltaTime;
+            rigidbody.MovePosition(transform.position + movement);
+            animator.SetFloat("IsWalking", 5f);
         }
         else
         {
             animator.SetFloat("IsWalking", 1f); ; 
         }
+    }
+
+    private bool IsRunning()
+    {
+        return IsWalking() && Input.GetKey(KeyCode.LeftShift);
     }
 
     private void WaitForAnimationEnd(float waitTime)
