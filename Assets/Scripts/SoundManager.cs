@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private AudioClip thereYouAre;
+
+    private AudioSource audioSource;
+
+    // Awake is called when the script instance is being loaded
+    private void Awake()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PlayBlackSamurai()
     {
-        
+        audioSource.PlayOneShot(thereYouAre);
     }
 }
