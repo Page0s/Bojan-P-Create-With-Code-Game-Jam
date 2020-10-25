@@ -72,5 +72,12 @@ public class Enemy : MonoBehaviour
         // Disable the enemy
         GetComponent<MoveForward>().enabled = false;
         this.enabled = false;
+        StartCoroutine(DisableObjects());
+    }
+
+    private IEnumerator DisableObjects()
+    {
+        yield return new WaitForSecondsRealtime(waitKickTime - 0.3f);
+        this.gameObject.SetActive(false);
     }
 }
