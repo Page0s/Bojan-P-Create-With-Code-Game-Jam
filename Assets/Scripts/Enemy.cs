@@ -61,7 +61,6 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Enemy Died");
         // Die animation
         animator.SetBool("IsDead", true);
 
